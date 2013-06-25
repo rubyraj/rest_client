@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'digest/md5'
 require 'cgi'
-require 'URI'
+require 'uri'
 require 'net/http'
 require 'net/https'
 require 'json'
@@ -17,10 +17,6 @@ def api_call(http_method, url, params={})
 
   url,params = url.split("?") if url.include?"?"
   if not url =~ /client_authorize/
-        puts "cookies"
-    p cookies
-    puts "access_id"
-    p cookies["access_id"]
     if cookies['access_id'].nil? or cookies['access_secret'].nil?
       raise "Please do 'client_authorize' before doing any other call"
     end

@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'digest/md5'
 require 'cgi'
-require 'URI'
+require 'uri'
 require 'net/http'
 require 'net/https'
 require 'json'
