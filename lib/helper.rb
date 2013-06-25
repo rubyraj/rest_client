@@ -7,6 +7,7 @@ require 'net/https'
 require 'json'
 require 'active_support/core_ext'
 include NetHttp
+$access = {}
 
 def api_call(http_method, url, params={})
   # url = $base_url + url
@@ -18,12 +19,12 @@ def api_call(http_method, url, params={})
   url,params = url.split("?") if url.include?"?"
   if not url =~ /client_authorize/
     if cookies['access_id'].nil? or cookies['access_secret'].nil?
-      raise "Please do 'client_authorize' before doing any other call"
+      @errors = "Please do 'client_authorize' before doing any other call"
     end
 
-    $access = {"access_id" => cookies['access_id'], "access_secret" => cookies['access_secret']}
-    p $access
-    (params = params.empty? ? add_access_signature :  add_access_signature(params))
+    p @errors
+    $access = {"access_id" => cookies['access_id'].to_s, "access_secret" => cookies['access_secret'].to_s}
+    params = params.empty? ? add_access_signature :  add_access_signature(params)
   end
   
   if params.is_a? String
@@ -39,7 +40,7 @@ def api_call(http_method, url, params={})
 
   #p response.code
   #pp response.body
-  raise "unexpected response: code => #{response.code} body=>#{response.body} class=>#{response.class}" unless response.is_a? Net::HTTPSuccess
+  # raise "unexpected response: code => #{response.code} body=>#{response.body} class=>#{response.class}" unless response.is_a? Net::HTTPSuccess
   # JSON.parse(response.body)['response'] unless response.body.strip.empty?
   response
 end

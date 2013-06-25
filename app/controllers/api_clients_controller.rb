@@ -41,16 +41,20 @@ class ApiClientsController < ApplicationController
   # POST /api_clients.json
   def create
     @input = params[:api_client]
-    p @input
+    @errors = nil
     
-    @api_response = api_call(@input['method'],@input['url'])
-    p @api_response
-
-    if @input['url'] =~ /client_authorize/
-      cookies['access_id'] = JSON.parse(@api_response.body)['response']['access_id']
-      cookies['access_secret'] = JSON.parse(@api_response.body)['response']['access_secret']
+    if @input['url'] =~ /.xml/ 
+      @errors = "Only JSON is supported"
+    else
+      @api_response = api_call(@input['method'],@input['url'])
+      if @input['url'] =~ /client_authorize/
+        if @api_response.is_a? Net::HTTPSuccess
+          cookies['access_id'] = JSON.parse(@api_response.body)['response']['access_id']
+          cookies['access_secret'] = JSON.parse(@api_response.body)['response']['access_secret']
+        end
+      end
     end
-    
+
     @api_client = ApiClient.new
     # @api_client = ApiClient.new(params[:api_client])
 
