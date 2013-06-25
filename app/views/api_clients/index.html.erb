@@ -1,0 +1,25 @@
+<h1>Listing api_clients</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>Method</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @api_clients.each do |api_client| %>
+  <tr>
+    <td><%= api_client.url %></td>
+    <td><%= api_client.method %></td>
+    <td><%= link_to 'Show', api_client %></td>
+    <td><%= link_to 'Edit', edit_api_client_path(api_client) %></td>
+    <td><%= link_to 'Destroy', api_client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Api client', new_api_client_path %>

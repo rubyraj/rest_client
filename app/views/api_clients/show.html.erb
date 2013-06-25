@@ -1,0 +1,2 @@
+<p> Response Code = <%= @api_response.code %></p>
+<pre> <%= simple_format(JSON.pretty_generate(JSON.parse(@api_response.body))) %> </pre>

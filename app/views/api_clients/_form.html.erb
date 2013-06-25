@@ -1,0 +1,35 @@
+<%= form_for(@api_client) do |f| %>
+  <% if @api_client.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@api_client.errors.count, "error") %> prohibited this api_client from being saved:</h2>
+
+      <ul>
+      <% @api_client.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div aligh="justify" style="width:1500px">
+  <div class="field">
+    <% d_url = @input.nil? ? 'https://<service_name>.synctv.com/api/v2' : @input['url'] %>
+    <% d_method = @input.nil? ? 'get' : @input['method'] %>
+
+    <%= f.label :url %>
+    <%= f.text_field :url, :size => 200 , :value=> d_url %>
+    <%= f.label :method %>
+    <%= f.select :method, [['Get','get'],['Put','put'],['Post','post']], :selected => d_method %>
+  </div>
+  <div class="actions">
+    <%= f.submit :go %>
+  </div>
+  <% p @api_response %>
+  <% if !@api_response.nil? %>
+    <div id="content" style="background-color:#EEEEEE">
+      <p> Response Code => <%= @api_response.code %></p>
+      <p> Response body => <pre> <%= h simple_format(JSON.pretty_generate(JSON.parse(@api_response.body))).gsub(/\<br \/\>/,"") %> </pre>
+    </div>
+  <% end %>
+</div>
+<% end %>
+<!-- /[\<br \/\>|\<\/p\>\\s*\<p\>]/ -->
