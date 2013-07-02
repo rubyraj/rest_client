@@ -46,7 +46,7 @@ def api_call(http_method, url, params={})
   response
 end
 
-params_hash = {access_id:'xyz',platform_ids:[1,2,3],subtitle_languages:['eng'],start_point:'230',end_point:'230',interlaced:true}
+#params_hash = {access_id:'xyz',platform_ids:[1,2,3],subtitle_languages:['eng'],start_point:'230',end_point:'230',interlaced:true}
 def pkg_params(params_hash)
   param_str = ''
   params_hash.each do |key,val|

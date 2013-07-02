@@ -42,11 +42,13 @@ class ApiClientsController < ApplicationController
   def create
     @input = params[:api_client]
     @errors = nil
-    
-    if @input['url'] =~ /.xml/ 
+
+    if @input['url'] =~ /.xml/
       @errors = "Only JSON is supported"
+    elsif @input['url'] =~ /\<service_name\>/
+      @errors = "Please change <service_name> to real service name"
     else
-      @api_response = api_call(@input['method'],@input['url'])
+      @api_response = api_call(@input['method'], @input['url'])
       if @input['url'] =~ /client_authorize/
         if @api_response.is_a? Net::HTTPSuccess
           cookies['access_id'] = JSON.parse(@api_response.body)['response']['access_id']
