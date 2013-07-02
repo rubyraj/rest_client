@@ -6,6 +6,7 @@ require 'net/http'
 require 'net/https'
 require 'json'
 require 'active_support/core_ext'
+require 'nethttp.rb'
 include NetHttp
 $access = {}
 
