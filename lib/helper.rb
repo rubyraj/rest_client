@@ -31,11 +31,11 @@ def api_call(http_method, url, params={})
   if params.is_a? String
     url = url + '?' + params
     params = {}
-    puts url
+    @url = url
   else
-    puts "\n" + url + '?' + params.map { |k, v| "#{k.to_s}=#{v.to_s}" }.join('&')
+    @url = url + '?' + params.map { |k, v| "#{k.to_s}=#{v.to_s}" }.join('&')
   end
-
+  puts @url
   #make http call
   response = send(http_method,url,params)
 

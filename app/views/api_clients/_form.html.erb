@@ -33,10 +33,11 @@
         <% end %>
 
         <% if !@api_response.nil? %>
+            <p> URL => <%= @url %></p>
             <p> Response Code => <%= @api_response.code %></p>
             <p> Response body =>
             <% if @api_response['content-type'] =~ /application\/json/ %>
-                <pre> <%= h simple_format(JSON.pretty_generate(JSON.parse(@api_response.body))).gsub(/\<br \/\>/, "") %> </pre>
+                <pre> <%= h simple_format(JSON.pretty_generate(JSON.parse(@api_response.body))).gsub(/\<br \/\>|\<[\/|]p\>|\<p\>/, "") %> </pre>
             <% else %>
                 <%= raw @api_response.body %>
             <% end %>
